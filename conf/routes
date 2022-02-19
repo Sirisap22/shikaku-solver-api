@@ -1,0 +1,2 @@
+POST     /depth-first-search                       controllers.ShikakuSolverController.getSolutionByDepthFirstSearch
+POST     /breath-first-search                      controllers.ShikakuSolverController.getSolutionByBreathFirstSearch
