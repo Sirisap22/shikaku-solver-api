@@ -21,21 +21,32 @@ object Utils {
     var sum = 0D
     for (i <- 0 until n) {
       val runtime = timer(block)
-      // println(s"Round $i: $runtime ns")
       sum += runtime
     }
     val averageRuntime = sum / n
-    // println(s"Average Runtime: $averageRuntime ns")
     averageRuntime
   } 
 
+  def averageRuntimeInMilliSec[R](n: Int)(block: => R): Double = {
+    averageRuntimeInNanoSec(n)(block)/1000000
+  }
+
   def memory(): Unit = {
-        val mb = 1024*1024
-        val runtime = Runtime.getRuntime
-        println("\nMemory in MB")
-        println("** Used Memory:  " + (runtime.totalMemory - runtime.freeMemory)/mb)
-        println("** Free Memory:  " + runtime.freeMemory/mb)
-        println("** Total Memory: " + runtime.totalMemory/mb)
-        println("** Max Memory:   " + runtime.maxMemory/mb)
-    }
+    val mb = 1024*1024
+    val runtime = Runtime.getRuntime
+    println("\nMemory in MB")
+    println("** Used Memory:  " + (runtime.totalMemory - runtime.freeMemory)/mb)
+    println("** Free Memory:  " + runtime.freeMemory/mb)
+    println("** Total Memory: " + runtime.totalMemory/mb)
+    println("** Max Memory:   " + runtime.maxMemory/mb)
+  }
+
+  def averageUsedMemory[R](time: Int, divider: Int)(block: => R): (R, Double) = {
+    val runtime = Runtime.getRuntime
+    val m1 = runtime.totalMemory() - runtime.freeMemory()
+    val result = block
+    val m2 = runtime.totalMemory() - runtime.freeMemory()
+
+    return (result, (m2 - m1).toDouble/(divider*time))
+  }
 }
