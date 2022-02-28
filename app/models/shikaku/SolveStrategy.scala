@@ -29,6 +29,9 @@ trait SolveStrategy {
     if (squareShapesCache.contains(size)) {
       return this.squareShapesCache(size)
     }
+    if (size == 1) {
+      return Vector[SquareShape](SquareShape(1, 1))
+    }
 
     var squareShapes = Vector[SquareShape]()
     for (
