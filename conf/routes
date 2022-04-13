@@ -1,4 +1,5 @@
 POST     /depth-first-search                       controllers.ShikakuSolverController.getSolutionByDepthFirstSearch
 POST     /breath-first-search                      controllers.ShikakuSolverController.getSolutionByBreathFirstSearch
+POST     /simple-heuristic-search                  controllers.ShikakuSolverController.getSolutionBySimpleHeuristicSearch
 POST     /test-depth-first-search                  controllers.ShikakuSolverController.testDepthFirstSearch
 POST     /test-breath-first-search                 controllers.ShikakuSolverController.testBreathFirstSearch  

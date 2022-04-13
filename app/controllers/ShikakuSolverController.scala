@@ -11,6 +11,7 @@ import shikaku.Coord
 import shikaku.Solver
 import shikaku.DepthFirstSearchStrategy
 import shikaku.BreathFirstSearchStrategy
+import shikaku.SimpleHeuristicSearchStrategy
 import shikaku.Utils
 
 @Singleton
@@ -55,6 +56,22 @@ extends BaseController {
       case None => BadRequest
     }
 
+  }
+
+  def getSolutionBySimpleHeuristicSearch(): Action[AnyContent] = Action { implicit request =>
+    val content = request.body
+    val jsonObject = content.asJson
+    val game: Option[GameState] = jsonObject.flatMap(Json.fromJson[GameState](_).asOpt)
+
+    game match {
+      case Some(newGame) => {
+        val input = newGame
+        val heuristicSolver = new Solver(input.numberOfRows, input.numberOfCols, input.clues, new SimpleHeuristicSearchStrategy())
+        val solution = heuristicSolver.solve()
+        Created(Json.toJson(solution))
+      }
+      case None => BadRequest
+    }
   }
 
   def testDepthFirstSearch(): Action[AnyContent] = Action { implicit request =>

@@ -20,6 +20,12 @@ class Square(val topLeft: Coord, val bottomRight: Coord) {
     points
   }
 
+  def getCentroid(): Centroid = {
+    val midX = (this.topLeft.x + this.bottomRight.x).toDouble/2
+    val midY = (this.topLeft.y + this.bottomRight.y).toDouble/2
+    return Centroid(midX, midY)
+  } 
+
   def isPointIntersect(point: Coord): Boolean = {
     point.x >= this.topLeft.x &&
     point.y >= this.topLeft.y &&
