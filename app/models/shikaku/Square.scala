@@ -20,6 +20,16 @@ class Square(val topLeft: Coord, val bottomRight: Coord) {
     points
   }
 
+  def getSurroundingPonts(): Vector[Coord] = {
+    val points = for (
+    x <- Vector.range(topLeft.x - 1, bottomRight.x + 2);
+    y <- Vector.range(topLeft.y - 1, bottomRight.y + 2);
+    point = Coord(x, y);
+    if (!this.isPointIntersect(point))
+    ) yield point
+    points
+  }
+
   def getCentroid(): Centroid = {
     val midX = (this.topLeft.x + this.bottomRight.x).toDouble/2
     val midY = (this.topLeft.y + this.bottomRight.y).toDouble/2
